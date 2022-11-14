@@ -172,7 +172,6 @@ def parse_feature(basedir: str, filename: str, encoding: str = "utf-8") -> Featu
             mode = types.EXAMPLES_HEADERS
             scenario.examples.line_number = line_number
             scenario.examples.tags = get_tags(prev_line)
-            scenario.examples.examples
         elif mode == types.EXAMPLES_HEADERS:
             scenario.examples.set_param_names([l for l in split_line(parsed_line) if l])
             mode = types.EXAMPLE_LINE
@@ -352,7 +351,7 @@ class Examples:
         self.examples.append(values)
         self.example_tags.append(self.tags)
 
-    def as_contexts(self) -> Iterable[dict[str, Any]]:
+    def as_contexts(self) -> Iterable[dict[str, Any], list[str]]:
         if not self.examples:
             return
         header, rows, tags = self.example_params, self.examples, self.example_tags
