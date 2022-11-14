@@ -249,9 +249,17 @@ def collect_example_parametrizations(
     contexts = list(templated_scenario.examples.as_contexts())
     if not contexts:
         return None
+    return [pytest.param(context[0], id="-".join(context[0].values()), marks=_register_marks(context[1])) for context in contexts]
 
-    return [pytest.param(context, id="-".join(context.values())) for context in contexts]
 
+def _register_marks(marks_object):
+    marks_list = []
+    for marks in marks_object:
+        mark = getattr(pytest.mark, marks)
+        marks_list.append(mark)
+
+
+    return marks_list
 
 def scenario(
     feature_name: str, scenario_name: str, encoding: str = "utf-8", features_base_dir=None
@@ -283,7 +291,6 @@ def scenario(
     return _get_scenario_decorator(
         feature=feature, feature_name=feature_name, templated_scenario=scenario, scenario_name=scenario_name
     )
-
 
 def get_features_base_dir(caller_module_path: str) -> str:
     d = get_from_ini("bdd_features_base_dir", None)
