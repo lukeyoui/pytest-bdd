@@ -252,12 +252,11 @@ def collect_example_parametrizations(
     return [pytest.param(context[0], id="-".join(context[0].values()), marks=_register_marks(context[1])) for context in contexts]
 
 
-def _register_marks(marks_object):
+def _register_marks(marks_object) -> list[pytest.mark]:
     marks_list = []
     for marks in marks_object:
         mark = getattr(pytest.mark, marks)
         marks_list.append(mark)
-
 
     return marks_list
 
