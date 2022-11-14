@@ -291,6 +291,7 @@ def scenario(
         feature=feature, feature_name=feature_name, templated_scenario=scenario, scenario_name=scenario_name
     )
 
+
 def get_features_base_dir(caller_module_path: str) -> str:
     d = get_from_ini("bdd_features_base_dir", None)
     if d is None:
