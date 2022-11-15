@@ -107,8 +107,7 @@ def parse_feature(basedir: str, filename: str, encoding: str = "utf-8") -> Featu
     description: list[str] = []
     step = None
     multiline_step = False
-    prev_line = None
-    
+
     with open(abs_filename, encoding=encoding) as f:
         content = f.read()
 
@@ -186,7 +185,6 @@ def parse_feature(basedir: str, filename: str, encoding: str = "utf-8") -> Featu
             else:
                 scenario = cast(ScenarioTemplate, scenario)
                 scenario.add_step(step)
-        prev_line = clean_line
 
     feature.description = "\n".join(description).strip()
     return feature
@@ -383,7 +381,3 @@ def get_tags(all_lines: list[str] | None, line_number: int) -> set[str]:
             total_tags = total_tags.union(line_tags)
             line_number -= 1
         return total_tags
-    
-
-        
-    
