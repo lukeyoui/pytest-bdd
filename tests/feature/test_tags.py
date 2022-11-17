@@ -155,6 +155,7 @@ def test_example_tags(pytester):
         scenario_tag_01
         example_tag_01
         example_tag_02
+        example_tag_03
     """
         ),
     )
@@ -175,6 +176,7 @@ def test_example_tags(pytester):
                 | 1     | 1   | 0    |
 
             @example_tag_02
+            @example_tag_03
             Examples:
                 | start | eat | left |
                 | 3     | 2   | 1    |
@@ -215,6 +217,14 @@ def test_example_tags(pytester):
 
     result = pytester.runpytest("-m", "example_tag_01 and example_tag_02", "-vv").parseoutcomes()
     assert result["deselected"] == 2
+
+    result = pytester.runpytest("-m", "scenario_tag_01 and example_tag_03", "-vv").parseoutcomes()
+    assert result["passed"] == 1
+    assert result["deselected"] == 1
+
+    result = pytester.runpytest("-m", "scenario_tag_01 and example_tag_02", "-vv").parseoutcomes()
+    assert result["passed"] == 1
+    assert result["deselected"] == 1
 
     result = pytester.runpytest("-m", "feature_tag_1", "-vv").parseoutcomes()
     assert result["passed"] == 2
