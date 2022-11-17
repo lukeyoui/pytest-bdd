@@ -141,7 +141,6 @@ def parse_feature(basedir: str, filename: str, encoding: str = "utf-8") -> Featu
                 _, feature.name = parse_line(clean_line)
                 feature.line_number = line_number
                 feature.tags = get_tags(all_lines, line_number)
-
             elif prev_mode == types.FEATURE:
                 description.append(clean_line)
             else:
